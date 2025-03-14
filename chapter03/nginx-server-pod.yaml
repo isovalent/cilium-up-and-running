@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-server
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: kind-worker2
+  containers:
+    - name: nginx
+      image: nginx
+
