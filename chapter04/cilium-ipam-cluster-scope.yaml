@@ -1,0 +1,8 @@
+cluster:
+  name: kind-kind
+ipam:
+  mode: cluster-pool
+operator:
+  replicas: 1
+routingMode: tunnel
+tunnelProtocol: vxlan

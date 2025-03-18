@@ -1,0 +1,23 @@
+routingMode: native
+endpointRoutes:
+  enabled: true
+
+autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: 10.0.0.0/8
+
+ipam:
+  mode: multi-pool
+  operator:
+    autoCreateCiliumPodIPPools:
+      default:
+        ipv4:
+          cidrs: ["10.10.0.0/16"]
+          maskSize: 27
+bpf:
+  masquerade: true
+# BPF-based masquerading requires kube-proxy replacement to be enabled
+kubeProxyReplacement: "true"
+k8sServiceHost: kind-control-plane
+k8sServicePort: 6443
+# Masquerading should be performed on all host egress interfaces
+devices: ["eth+"]
