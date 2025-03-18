@@ -1,7 +1,7 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: ch03-policy
+  name: policy
   namespace: default
 spec:
   endpointSelector:
