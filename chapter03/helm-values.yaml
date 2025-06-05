@@ -7,3 +7,12 @@ operator:
 routingMode: tunnel
 tunnelProtocol: vxlan
 
+cluster:
+  name: kind-kind
+ipam:
+  mode: kubernetes
+operator:
+  replicas: 1
+routingMode: tunnel
+tunnelProtocol: vxlan
+
