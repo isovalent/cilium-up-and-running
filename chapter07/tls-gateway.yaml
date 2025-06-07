@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: tls-gateway
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - name: https-1
+    protocol: HTTPS
+    port: 443
+    hostname: "bookinfo.cilium.rocks"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: demo-cert

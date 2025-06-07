@@ -1,0 +1,33 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: productcatalogservice-rule
+spec:
+  parentRefs:
+    - namespace: default
+      name: cilium-gw
+  rules:
+    - matches:
+        - method:
+            service: hipstershop.ProductCatalogService
+            method: ListProducts
+      backendRefs:
+        - name: productcatalogservice
+          port: 3550
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GRPCRoute
+metadata:
+  name: currencyservice-rule
+spec:
+  parentRefs:
+    - namespace: default
+      name: cilium-gw
+  rules:
+    - matches:
+        - method:
+            service: hipstershop.CurrencyService
+            method: GetSupportedCurrencies
+      backendRefs:
+        - name: currencyservice
+          port: 7000
