@@ -5,7 +5,7 @@ metadata:
 spec:
   parentRefs:
     - namespace: default
-      name: cilium-gw
+      name: my-gateway
   rules:
     - matches:
         - method:
@@ -22,7 +22,7 @@ metadata:
 spec:
   parentRefs:
     - namespace: default
-      name: cilium-gw
+      name: my-gateway
   rules:
     - matches:
         - method:
