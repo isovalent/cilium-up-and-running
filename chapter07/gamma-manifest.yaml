@@ -1,0 +1,105 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gamma-ns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-v1
+  namespace: gamma-ns
+  labels:
+    app: echo
+spec:
+  selector:
+    matchLabels:
+      app: echo
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: echo
+        version: v1
+    spec:
+      containers:
+      - name: echo
+        image: kicbase/echo-server:1.0
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-v1
+  namespace: gamma-ns
+spec:
+  selector:
+    app: echo
+    version: v1
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-v2
+  namespace: gamma-ns
+  labels:
+    app: echo
+spec:
+  selector:
+    matchLabels:
+      app: echo
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: echo
+        version: v2
+    spec:
+      containers:
+      - name: echo
+        image: kicbase/echo-server:1.0
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-v2
+  namespace: gamma-ns
+spec:
+  selector:
+    app: echo
+    version: v2
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo
+  namespace: gamma-ns
+spec:
+  selector:
+    app: echo
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  namespace: gamma-ns
+spec:
+  containers:
+  - name: netshoot
+    image: nicolaka/netshoot:latest
+    command: ["sleep", "infinite"]
+

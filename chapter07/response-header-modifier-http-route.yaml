@@ -4,7 +4,7 @@ metadata:
   name: response-header-modifier
 spec:
   parentRefs:
-  - name: cilium-gw
+  - name: my-gateway
   rules:
   - matches:
     - path:
