@@ -3,7 +3,10 @@ apiVersion: kind.x-k8s.io/v1alpha4
 #name: cilium-up-and-running-cluster
 nodes:
 - role: control-plane
+  image: kindest/node:v1.32.0
 - role: worker
+  image: kindest/node:v1.32.0
 - role: worker
+  image: kindest/node:v1.32.0
 networking:
   disableDefaultCNI: true

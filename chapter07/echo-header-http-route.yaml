@@ -10,12 +10,6 @@ spec:
     - path:
         type: PathPrefix
         value: /cilium-add-a-request-header
-    #filters:
-    #- type: RequestHeaderModifier
-    #  requestHeaderModifier:
-    #    add:
-    #    - name: my-cilium-header-name
-    #      value: my-cilium-header-value
     backendRefs:
       - name: echo-1
         port: 8080
