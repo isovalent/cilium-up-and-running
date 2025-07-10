@@ -1,0 +1,30 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+  disableDefaultCNI: true
+nodes:
+- role: control-plane
+# Compute nodes
+- role: worker
+- role: worker
+# Egress nodes
+- role: worker
+  labels:
+    egress-gw: true
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "egress-gw=true"
+        register-with-taints: "egress-gw:NoSchedule"
+- role: worker
+  labels:
+    egress-gw: true
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "egress-gw=true"
+        register-with-taints: "egress-gw:NoSchedule"

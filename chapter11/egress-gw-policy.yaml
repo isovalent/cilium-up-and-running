@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumEgressGatewayPolicy
+metadata:
+  name: outpost
+spec:
+  destinationCIDRs:
+  - "172.18.0.0/16"
+  selectors:
+  - podSelector:
+      matchLabels:
+        org: alliance
+  egressGateway:
+    nodeSelector:
+      matchLabels:
+        egress-gw: 'true'
+    interface: net0
