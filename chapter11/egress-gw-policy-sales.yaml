@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumEgressGatewayPolicy
+metadata:
+  name: sales-egress
+spec:
+  destinationCIDRs:
+  - "172.18.0.0/16"
+  selectors:
+  - namespaceSelector:
+      matchLabels:
+        name: sales
+  egressGateway:
+    nodeSelector:
+      matchLabels:
+        kubernetes.io/hostname: kind-worker3
+    interface: eth0

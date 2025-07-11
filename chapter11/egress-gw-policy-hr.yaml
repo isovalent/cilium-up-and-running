@@ -1,16 +1,16 @@
 apiVersion: cilium.io/v2
 kind: CiliumEgressGatewayPolicy
 metadata:
-  name: outpost
+  name: hr-egress
 spec:
   destinationCIDRs:
   - "172.18.0.0/16"
   selectors:
-  - podSelector:
+  - namespaceSelector:
       matchLabels:
-        org: alliance
+        name: hr
   egressGateway:
     nodeSelector:
       matchLabels:
-        egress-gw: 'true'
-    interface: net0
+        kubernetes.io/hostname: kind-worker3
+    egressIP: 172.18.0.100
