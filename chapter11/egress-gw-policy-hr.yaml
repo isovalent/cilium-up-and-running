@@ -12,5 +12,5 @@ spec:
   egressGateway:
     nodeSelector:
       matchLabels:
-        kubernetes.io/hostname: kind-worker3
+        egress-gw : "true"
     egressIP: 172.18.0.100

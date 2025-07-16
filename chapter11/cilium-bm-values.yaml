@@ -1,0 +1,12 @@
+aksbyocni:
+  enabled: true
+azure:
+  resourceGroup: byocni
+cluster:
+  name: byocni
+nodeinit:
+  enabled: true
+operator:
+  replicas: 1
+bandwidthManager:
+  enabled: true
