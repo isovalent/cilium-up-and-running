@@ -12,5 +12,5 @@ spec:
   egressGateway:
     nodeSelector:
       matchLabels:
-        egress-gw : "true"
+        egress-gw : "hr"
     egressIP: 172.18.0.100

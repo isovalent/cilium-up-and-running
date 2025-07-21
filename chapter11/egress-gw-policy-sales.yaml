@@ -12,5 +12,5 @@ spec:
   egressGateway:
     nodeSelector:
       matchLabels:
-        kubernetes.io/hostname: kind-worker4
-    interface: eth0
+        egress-gw : "sales"
+    egressIP: 172.18.0.101
