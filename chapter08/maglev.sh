@@ -16,36 +16,22 @@ echo_error() {
     exit 1
 }
 
-# Main setup
 echo "Starting Cilium setup..."
 
-# Clone Cilium repository
 if [ ! -d "cilium" ]; then
     git clone https://github.com/cilium/cilium || echo_error "Failed to clone Cilium repository"
 fi
 
 cd cilium
-
 sysctl fs.inotify.max_user_instances=1024
+bash contrib/scripts/kind.sh --xdp 1 4 || echo_error "Failed to create kind cluster"
 
-# Setup kind cluster with XDP
-bash contrib/scripts/kind.sh --xdp || echo_error "Failed to create kind cluster"
-
-# Wait for kind cluster to be ready
 echo "Waiting for kind cluster to be ready..."
-#kubectl wait --for=condition=Ready nodes --all --timeout=300s
-
 mkdir -p ../manifests ../frr
 
-# -----------------------------
-# Add Cilium Helm Repo
-# -----------------------------
 helm repo add cilium https://helm.cilium.io/ || echo_error "Failed to add Cilium helm repo"
 helm repo update
 
-# -----------------------------
-# Cilium Helm Values
-# -----------------------------
 cat << 'EOF' > ../manifests/values.yaml
 kubeProxyReplacement: true
 routingMode: native
@@ -64,9 +50,6 @@ helm install cilium cilium/cilium --version 1.17.5 -f ../manifests/values.yaml -
 echo "Waiting for Cilium to be ready..."
 cilium status --wait
 
-# -----------------------------
-# LoadBalancer IP Pool
-# -----------------------------
 cat << 'EOF' > ../manifests/lb-ippool.yaml
 apiVersion: "cilium.io/v2alpha1"
 kind: CiliumLoadBalancerIPPool
@@ -79,9 +62,6 @@ EOF
 
 kubectl apply -f ../manifests/lb-ippool.yaml || echo_error "Failed to apply LB IPAM CRD"
 
-# -----------------------------
-# BGP Configs
-# -----------------------------
 cat << 'EOF' > ../manifests/bgp-peer.yaml
 apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPPeerConfig
@@ -98,7 +78,10 @@ EOF
 
 kubectl apply -f ../manifests/bgp-peer.yaml || echo_error "Failed to apply BGP peer config"
 
-cat << 'EOF' > ../manifests/bgp-cluster.yaml
+WORKER3_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kind-worker3)
+WORKER4_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kind-worker4)
+
+cat <<EOF > ../manifests/bgp-cluster.yaml
 apiVersion: cilium.io/v2alpha1
 kind: CiliumBGPClusterConfig
 metadata:
@@ -113,7 +96,7 @@ spec:
     peers:
     - name: "frr"
       peerASN: 64512
-      peerAddress: 172.18.0.4
+      peerAddress: 172.18.0.7
       peerConfigRef:
         name: "frr"
 EOF
@@ -140,39 +123,80 @@ EOF
 
 kubectl apply -f ../manifests/bgp-advertisement.yaml || echo_error "Failed to apply BGP advertisement config"
 
-kubectl label node kind-worker2 cilium-bpg-peering="true" || echo_error "Failed to label kind-worker"
-kubectl label node kind-worker3 cilium-bpg-peering="true" || echo_error "Failed to label control-plane"
+# Label nodes
+kubectl label node kind-worker3 cilium-bpg-peering=true maglev-backend=true || echo_error "Failed to label kind-worker3"
+kubectl label node kind-worker4 cilium-bpg-peering=true maglev-backend=true || echo_error "Failed to label kind-worker4"
 
-# -----------------------------
-# FRR Container Setup
-# -----------------------------
-cat << 'EOF' > ../frr/daemons
+# Deploy echo-server on maglev-backend nodes
+cat << 'EOF' > ../manifests/echo-server.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-server
+  labels:
+    app: echo-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echo-server
+  template:
+    metadata:
+      labels:
+        app: echo-server
+    spec:
+      nodeSelector:
+        maglev-backend: "true"
+      containers:
+        - name: echo-server
+          image: gcr.io/kubernetes-e2e-test-images/echoserver:2.2
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-server
+spec:
+  selector:
+    app: echo-server
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+EOF
+
+kubectl apply -f ../manifests/echo-server.yaml || echo_error "Failed to deploy echo-server"
+
+# FRR config
+cat <<EOF > ../frr/daemons
 zebra=yes
 bgpd=yes
 EOF
 
-cat << 'EOF' > ../frr/frr.conf
+cat <<EOF > ../frr/frr.conf
 log syslog informational
-router id 172.18.0.4
+router id 172.18.0.7
 
 router bgp 64512
- bgp router-id 172.18.0.4
- neighbor 172.18.0.2 remote-as 64513
- neighbor 172.18.0.2 update-source eth0
+ bgp router-id 172.18.0.7
+ neighbor ${WORKER3_IP} remote-as 64513
+ neighbor ${WORKER3_IP} update-source eth0
 
- neighbor 172.18.0.3 remote-as 64513
- neighbor 172.18.0.3 update-source eth0
+ neighbor ${WORKER4_IP} remote-as 64513
+ neighbor ${WORKER4_IP} update-source eth0
 
  address-family ipv4 unicast
-  neighbor 172.18.0.2 activate
-  neighbor 172.18.0.2 soft-reconfiguration inbound
-  neighbor 172.18.0.2 route-map ACCEPT-IN in
-  neighbor 172.18.0.2 route-map DENY-OUT out
+  neighbor ${WORKER3_IP} activate
+  neighbor ${WORKER3_IP} soft-reconfiguration inbound
+  neighbor ${WORKER3_IP} route-map ACCEPT-IN in
+  neighbor ${WORKER3_IP} route-map DENY-OUT out
 
-  neighbor 172.18.0.3 activate
-  neighbor 172.18.0.3 soft-reconfiguration inbound
-  neighbor 172.18.0.3 route-map ACCEPT-IN in
-  neighbor 172.18.0.3 route-map DENY-OUT out
+  neighbor ${WORKER4_IP} activate
+  neighbor ${WORKER4_IP} soft-reconfiguration inbound
+  neighbor ${WORKER4_IP} route-map ACCEPT-IN in
+  neighbor ${WORKER4_IP} route-map DENY-OUT out
  exit-address-family
 
 route-map ACCEPT-IN permit 10
@@ -191,53 +215,7 @@ docker run -d --name frr \
     --privileged \
     frrouting/frr:v8.2.2 || echo_error "Failed to start FRR container"
 
-# -----------------------------
-# Echo Server (LoadBalancer)
-# -----------------------------
-cat << 'EOF' > ../manifests/echo-servers.yaml
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: echo-1
-  name: echo-1
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 8080
-    name: http
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: echo-1
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: echo-1
-  name: echo-1
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: echo-1
-  template:
-    metadata:
-      labels:
-        app: echo-1
-    spec:
-      containers:
-      - image: gcr.io/kubernetes-e2e-test-images/echoserver:2.2
-        name: echo-1
-        ports:
-        - containerPort: 8080
-EOF
-
-kubectl apply -f ../manifests/echo-servers.yaml || echo_error "Failed to deploy echo server"
-
 echo_success "✅ Setup complete!"
 echo_success "To test DSR from another container, run:"
-echo "LB_IP=$(kubectl get svc echo-1 -o jsonpath='{.status.loadBalancer.ingress[0].ip}') && \\"
+echo "LB_IP=$(kubectl get svc echo-server -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
 echo "docker run --rm --network kind-cilium curlimages/curl curl -s http://\$LB_IP:8080"
