@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,5 +26,4 @@ spec:
           args:
             - sh
             - -c
-            - 'while true; do curl -s -v nginx 2>&1 | grep X-Server-Hostname; sleep 1; done;'
-  
+            - 'while true; do curl -s echo-1:8080 | grep "Request served by"; sleep 1; done;'

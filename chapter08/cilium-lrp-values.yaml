@@ -1,4 +1,4 @@
 kubeProxyReplacement: true
 localRedirectPolicy: true
-k8sServiceHost: 172.18.0.4
+k8sServiceHost: kind-control-plane
 k8sServicePort: 6443

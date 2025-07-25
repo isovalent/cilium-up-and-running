@@ -1,0 +1,16 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumLocalRedirectPolicy
+metadata:
+  name: "echo-server-lrp"
+spec:
+  redirectFrontend:
+    serviceMatcher:
+      serviceName: echo-server
+      namespace: default
+  redirectBackend:
+    localEndpointSelector:
+      matchLabels:
+        app: echo-server
+    toPorts:
+      - port: "8080"
+        protocol: TCP

@@ -216,6 +216,3 @@ docker run -d --name frr \
     frrouting/frr:v8.2.2 || echo_error "Failed to start FRR container"
 
 echo_success "✅ Setup complete!"
-echo_success "To test DSR from another container, run:"
-echo "LB_IP=$(kubectl get svc echo-server -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
-echo "docker run --rm --network kind-cilium curlimages/curl curl -s http://\$LB_IP:8080"
