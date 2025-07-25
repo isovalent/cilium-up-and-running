@@ -140,8 +140,8 @@ EOF
 
 kubectl apply -f ../manifests/bgp-advertisement.yaml || echo_error "Failed to apply BGP advertisement config"
 
-kubectl label node kind-worker2 cilium-bpg-peering="true" || echo_error "Failed to label kind-worker"
-kubectl label node kind-worker3 cilium-bpg-peering="true" || echo_error "Failed to label control-plane"
+kubectl label node kind-worker cilium-bpg-peering="true" || echo_error "Failed to label kind-worker"
+kubectl label node kind-control-plane cilium-bpg-peering="true" || echo_error "Failed to label control-plane"
 
 # -----------------------------
 # FRR Container Setup
