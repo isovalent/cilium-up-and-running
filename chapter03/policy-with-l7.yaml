@@ -19,5 +19,3 @@ spec:
             http:
             - method: "GET"
               path: "/index.html"
-  log:
-    value: "Network Policy Log 1.18"
