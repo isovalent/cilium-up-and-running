@@ -1,0 +1,7 @@
+aksbyocni:
+  enabled: true
+
+ipam:
+  mode: cluster-pool
+
+tunnelProtocol: geneve

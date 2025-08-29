@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-a
+spec:
+  nodeName: kind-worker
+  containers:
+    - name: netshoot
+      image: nicolaka/netshoot:latest
+      command: ["sleep", "infinite"]
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-b
+spec:
+  nodeName: kind-worker
+  containers:
+    - name: netshoot
+      image: nicolaka/netshoot:latest
+      command: ["sleep", "infinite"]
+
