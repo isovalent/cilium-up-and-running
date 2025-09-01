@@ -1,9 +1,9 @@
 aksbyocni:
   enabled: true
 azure:
-  resourceGroup: byocni
+  resourceGroup: bandwidth-rg
 cluster:
-  name: byocni
+  name: bandwidth-rg
 nodeinit:
   enabled: true
 operator:

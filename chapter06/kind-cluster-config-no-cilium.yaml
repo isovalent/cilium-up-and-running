@@ -5,5 +5,4 @@ nodes:
 - role: worker
 - role: worker
 networking:
-  disableDefaultCNI: true
-  kubeProxyMode: "none"
+  kubeProxyMode: iptables
