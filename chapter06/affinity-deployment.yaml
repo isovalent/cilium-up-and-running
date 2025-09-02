@@ -1,28 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpd
+  name: podinfo
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
-      app: httpd
+      app: podinfo
   template:
     metadata:
       labels:
-        app: httpd
+        app: podinfo
     spec:
       containers:
-      - name: httpd
-        image: httpd
+      - name: podinfo
+        image: stefanprodan/podinfo
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: httpd
+  name: podinfo
 spec:
-  type: LoadBalancer
   selector:
-    app: httpd
+    app: podinfo
   ports:
-  - port: 80
+  - port: 9898
