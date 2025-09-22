@@ -24,7 +24,7 @@ metadata:
   name: httpd
   labels:
     app: httpd
-    announcement: l2
+    announcement: bgp
 spec:
   type: LoadBalancer
   selector:
