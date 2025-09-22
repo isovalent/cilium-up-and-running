@@ -1,0 +1,15 @@
+frr version 10.3.1
+frr defaults traditional
+hostname frr
+log syslog
+service integrated-vtysh-config
+
+router bgp 64512
+  bgp router-id 172.18.255.254
+  neighbor NEIGHBOR1 remote-as 64512
+  neighbor NEIGHBOR2 remote-as 64512
+  !
+  address-family ipv4 unicast
+    neighbor NEIGHBOR1 activate
+    neighbor NEIGHBOR2 activate
+  exit-address-family

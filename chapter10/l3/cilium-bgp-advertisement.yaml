@@ -1,0 +1,20 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisement
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+    - advertisementType: "Service"
+      service:
+        addresses:
+        - LoadBalancerIP
+      selector:
+        matchLabels:
+          announcement: bgp
+      attributes:
+        communities:
+          standard:
+          - "64512:99"
+        localPreference: 200

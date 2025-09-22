@@ -1,0 +1,18 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+  name: frr
+spec:
+  nodeSelector:
+    matchExpressions:
+    - key: node-role.kubernetes.io/control-plane
+      operator: DoesNotExist
+  bgpInstances:
+  - name: instance-64512
+    localASN: 64512
+    peers:
+    - name: peer-64512-frr
+      peerASN: 64512
+      peerAddress: 192.168.97.5
+      peerConfigRef:<4>
+        name: peer-config
