@@ -26,4 +26,4 @@ spec:
           args:
             - sh
             - -c
-            - 'while true; do curl -s echo-1:8080 | grep "Request served by"; sleep 1; done;'
+            - 'while true; do curl -s echo:8080 | grep "Request served by"; sleep 1; done;'

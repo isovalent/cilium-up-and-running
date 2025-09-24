@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: echo-1
-  name: echo-1
+    app: echo
+  name: echo
 spec:
   ports:
   - port: 8080
@@ -11,7 +11,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: echo-1
+    app: echo
   ipFamilyPolicy: SingleStack
-  trafficDistribution: PreferClose
+  #trafficDistribution: PreferClose
 
