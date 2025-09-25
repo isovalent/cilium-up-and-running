@@ -1,0 +1,30 @@
+# Cilium DSR (Direct Server Return) Configuration
+# Cross-platform compatible - works on Mac, Linux, etc.
+# No XDP acceleration for maximum compatibility
+
+# Essential DSR configuration
+kubeProxyReplacement: true
+routingMode: native
+ipv4NativeRoutingCIDR: "172.18.0.0/16"
+autoDirectNodeRoutes: true
+
+# Required for kube-proxy replacement to reach API server
+k8sServiceHost: "kind-control-plane"
+k8sServicePort: 6443
+
+# Load Balancer configuration for DSR
+loadBalancer:
+  # Use "dsr" mode for Direct Server Return
+  mode: "dsr"
+  # Don't use native acceleration for cross-platform compatibility
+  # acceleration: "disabled"  # This ensures it works on Mac
+
+# Optional: Enable for more detailed DSR logging
+debug:
+  enabled: false
+  # verbose: ["datapath", "service"]
+
+# Optional: If you want to use NodePort services with DSR
+# nodePort:
+#   enabled: true
+#   range: "30000-32767"

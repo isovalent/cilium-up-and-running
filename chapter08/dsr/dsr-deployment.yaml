@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: echo
+  name: whatsmyip
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: echo
+      app: whatsmyip
   template:
     metadata:
       labels:
-        app: echo
+        app: whatsmyip
     spec:
       containers:
-        - name: echo
-          image: kicbase/echo-server:1.0
+        - name: whatsmyip
+          image: quay.io/isovalent-dev/egressgw-whatismyip:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 8000
