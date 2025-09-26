@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+  name: frr
+spec:
+  nodeSelector:
+    matchLabels:
+      cilium-bgp-peering: "true"
+  bgpInstances:
+  - name: "64513"
+    localASN: 64513
+    peers:
+    - name: "frr"
+      peerASN: 64512
+      peerAddress: 172.18.0.7
+      peerConfigRef:
+        name: "frr"

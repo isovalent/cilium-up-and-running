@@ -1,0 +1,30 @@
+# Cilium Maglev Configuration
+# Demonstrates consistent hashing load balancing with BGP
+
+# Essential Maglev configuration
+kubeProxyReplacement: true
+routingMode: native
+ipv4NativeRoutingCIDR: "172.18.0.0/16"
+autoDirectNodeRoutes: true
+
+# Required for kube-proxy replacement to reach API server
+k8sServiceHost: "kind-control-plane"
+k8sServicePort: 6443
+
+# Load Balancer configuration with Maglev
+loadBalancer:
+  # Use "dsr" mode for Direct Server Return
+  mode: "dsr"
+  # Use "maglev" algorithm for consistent hashing
+  algorithm: "maglev"
+  # Cross-platform compatibility - no native acceleration
+  # acceleration: "disabled"
+
+# BGP Control Plane for LoadBalancer IP advertisement
+bgpControlPlane:
+  enabled: true
+
+# Optional: Enable for debugging Maglev behavior
+debug:
+  enabled: false
+  # verbose: ["datapath", "service", "lb"]

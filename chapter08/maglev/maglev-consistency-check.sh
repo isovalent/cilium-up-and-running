@@ -29,27 +29,66 @@ for ((i = 0; i < NUM_PORTS; i++)); do
 
   echo -n "Port $src_port: "
 
-  result=$(curl -s --max-time 2 --local-port "$src_port" "$TARGET_IP:$TARGET_PORT" || echo "ERR")
+  result=$(curl -s --max-time 2 --local-port "$src_port" "$TARGET_IP:$TARGET_PORT" 2>/dev/null || echo "CURL_ERR")
 
-  if echo "$result" | grep -q "Hostname:"; then
+  if [[ "$result" == "CURL_ERR" ]]; then
+    echo "$src_port -> ERROR (connection failed)" | tee -a "$outfile"
+  elif echo "$result" | head -1 | grep -q "Request served by"; then
+    backend=$(echo "$result" | head -1 | grep "Request served by" | awk '{print $4}')
+    echo "$src_port -> $backend" | tee -a "$outfile"
+  elif echo "$result" | grep -q "Hostname:"; then
+    # Fallback for other echo server images
     backend=$(echo "$result" | grep "Hostname:" | awk '{print $2}')
     echo "$src_port -> $backend" | tee -a "$outfile"
   else
-    echo "$src_port -> ERROR" | tee -a "$outfile"
+    # Debug: show first line of response
+    first_line=$(echo "$result" | head -1)
+    echo "$src_port -> ERROR (first line: '$first_line')" | tee -a "$outfile"
   fi
 
   sleep "$SLEEP_BETWEEN"
 done
 
-# Find previous result file for comparison
+# Analyze results
+echo
+echo "📊 Results Analysis:"
+
+# Count successful vs error responses
+success_count=$(grep -v "ERROR" "$outfile" | wc -l)
+error_count=$(grep "ERROR" "$outfile" | wc -l)
+total_count=$((success_count + error_count))
+
+echo "   ✅ Successful responses: $success_count/$total_count"
+echo "   ❌ Error responses: $error_count/$total_count"
+
+if [ "$error_count" -gt 0 ]; then
+  echo "   ⚠️  Errors detected - check connectivity and service health"
+fi
+
+# Find previous successful result file for comparison
 previous=$(ls -t "$OUTPUT_DIR"/result-*.txt | grep -v "$outfile" | head -n1 || true)
 
 if [[ -n "$previous" ]]; then
   echo
   echo "🔍 Comparing to previous result: $previous"
-  echo
-  diff -u "$previous" "$outfile" || true
+  
+  # Only compare if both files have successful results
+  prev_success=$(grep -v "ERROR" "$previous" | wc -l || echo "0")
+  if [ "$success_count" -gt 0 ] && [ "$prev_success" -gt 0 ]; then
+    if diff -q "$previous" "$outfile" > /dev/null; then
+      echo "   ✅ IDENTICAL: Maglev consistent hashing is working correctly!"
+    else
+      echo "   ❌ DIFFERENT: Results changed - this indicates inconsistent load balancing"
+      echo "   📋 Differences:"
+      diff "$previous" "$outfile" || true
+    fi
+  else
+    echo "   ⚠️  Cannot compare - one or both files contain errors"
+  fi
 else
   echo
-  echo "ℹ️ No previous result file to compare."
+  echo "ℹ️  No previous result file to compare."
+  if [ "$success_count" -gt 0 ]; then
+    echo "   💡 Run this test again to verify Maglev consistency"
+  fi
 fi

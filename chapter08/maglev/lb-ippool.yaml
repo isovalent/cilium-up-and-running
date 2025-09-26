@@ -1,0 +1,7 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: "maglev-demo-pool"
+spec:
+  blocks:
+  - cidr: "192.168.100.0/24"

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+  labels:
+    app: echo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      nodeSelector:
+        maglev-backend: "true"
+      containers:
+        - name: echo
+          image: kicbase/echo-server:1.0
+          ports:
+            - containerPort: 8080
