@@ -1,0 +1,17 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: nginx
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: nginx
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: frontend
+            io.cilium.k8s.policy.cluster: red
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP

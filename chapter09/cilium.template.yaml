@@ -1,0 +1,18 @@
+clustermesh:
+  useAPIServer: true
+  config:
+    enabled: true
+  apiserver:
+    tls:
+      authMode: cluster
+      auto:
+        enabled: true
+        method: cronJob
+        schedule: "0 0 1 */4 *"
+hubble:
+  tls:
+    enabled: true
+    auto:
+      enabled: true
+      method: cronJob
+      schedule: "0 0 1 */4 *"
