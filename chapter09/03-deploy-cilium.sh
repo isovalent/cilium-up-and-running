@@ -15,11 +15,11 @@ for i in "${!clusters[@]}"; do
     --set "cluster.name=$name" \
     --set "ipam.operator.clusterPoolIPv4PodCIDRList=10.$id.0.0/16"
   kubectl rollout restart \
-  --context "kind-$name" \
-  --namespace kube-system \
-  deployment/clustermesh-apiserver \
-  deployment/cilium-operator \
-  daemonset/cilium-envoy \
-  daemonset/cilium
+    --context "kind-$name" \
+    --namespace kube-system \
+    deployment/clustermesh-apiserver \
+    deployment/cilium-operator \
+    daemonset/cilium-envoy \
+    daemonset/cilium
 done
 
