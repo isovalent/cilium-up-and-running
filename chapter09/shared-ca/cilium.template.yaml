@@ -1,0 +1,24 @@
+clustermesh:
+  useAPIServer: true
+  config:
+    enabled: true
+  apiserver:
+    tls:
+      authMode: cluster
+      auto:
+        enabled: true
+        method: certmanager
+        certManagerIssuerRef:
+          group: cert-manager.io
+          kind: Issuer
+          name: openbao
+hubble:
+  tls:
+    enabled: true
+    auto:
+      enabled: true
+      method: certmanager
+      certManagerIssuerRef:
+        group: cert-manager.io
+        kind: Issuer
+        name: openbao

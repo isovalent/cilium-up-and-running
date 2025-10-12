@@ -1,0 +1,5 @@
+hubble:
+  tls:
+    enabled: false
+    auto:
+      enabled: false

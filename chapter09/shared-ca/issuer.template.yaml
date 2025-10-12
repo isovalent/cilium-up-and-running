@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: openbao
+  namespace: kube-system
+spec:
+  vault:
+    path: pki/sign/up-and-running
+    auth:
+      tokenSecretRef:
+        name: cert-manager-openbao-token
+        key: token
