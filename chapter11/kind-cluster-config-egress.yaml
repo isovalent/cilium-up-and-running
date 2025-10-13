@@ -4,11 +4,15 @@ networking:
   disableDefaultCNI: true
 nodes:
 - role: control-plane
+  image: kindest/node:v1.33.0
 # Compute nodes
 - role: worker
+  image: kindest/node:v1.33.0
 - role: worker
+  image: kindest/node:v1.33.0
 # Egress nodes
 - role: worker
+  image: kindest/node:v1.33.0
   labels:
     egress-gw: true
   kubeadmConfigPatches:
@@ -19,6 +23,7 @@ nodes:
         node-labels: "egress-gw=true"
         register-with-taints: "egress-gw:NoSchedule"
 - role: worker
+  image: kindest/node:v1.33.0
   labels:
     egress-gw: true
   kubeadmConfigPatches:
