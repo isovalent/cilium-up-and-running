@@ -8,7 +8,7 @@
 # -------- Variables (override on the command line if needed) --------
 CHAPTER           ?= ch05-datapath
 CLUSTER           ?= cilium-book
-KIND_IMAGE        ?= kindest/node:v1.33.5
+KIND_IMAGE        ?= kindest/node:v1.33.0
 CILIUM_VERSION    ?= 1.18.2
 KUBECONFIG        ?= $(HOME)/.kube/config
 # If a chapter has its own kind.yaml or values.yaml, we prefer those.

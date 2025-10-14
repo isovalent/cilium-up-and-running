@@ -32,7 +32,7 @@ This repository includes a comprehensive Makefile to streamline cluster manageme
 
 The scripts and examples in this repository have been validated with:
 - **Cilium**: v1.18.2
-- **Kubernetes**: v1.34
+- **Kubernetes**: v1.33
 
 ### Quick Usage
 
