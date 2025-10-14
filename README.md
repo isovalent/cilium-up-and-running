@@ -24,6 +24,35 @@ cd cilium-up-and-running
 
 You can then browse the files and follow the instructions provided within each folder.
 
+## Makefile Automation
+
+This repository includes a comprehensive Makefile to streamline cluster management and Cilium deployments across chapters. The Makefile automates common tasks like creating Kind clusters, installing Cilium, and applying chapter-specific manifests.
+
+### Validated Versions
+
+The scripts and examples in this repository have been validated with:
+- **Cilium**: v1.18.2
+- **Kubernetes**: v1.34
+
+### Quick Usage
+
+```bash
+# Create cluster and install Cilium for a specific chapter
+make up CHAPTER=ch06-services
+make cilium-install CHAPTER=ch06-services
+
+# Apply chapter manifests
+make apply CHAPTER=ch06-services
+
+# Clean up
+make down
+
+# See all available targets
+make help
+```
+
+The Makefile automatically detects chapter-specific configurations (kind.yaml, values.yaml) and falls back to sensible defaults, making it easy to work through the book examples consistently.
+
 ## License
 
 This repository is licensed under the [MIT License](./LICENSE). See the [LICENSE](./LICENSE) file for details.
