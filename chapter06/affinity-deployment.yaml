@@ -6,11 +6,11 @@ spec:
   replicas: 5
   selector:
     matchLabels:
-      app: podinfo
+      app.kubernetes.io/name: podinfo
   template:
     metadata:
       labels:
-        app: podinfo
+        app.kubernetes.io/name: podinfo
     spec:
       containers:
       - name: podinfo
@@ -22,6 +22,6 @@ metadata:
   name: podinfo
 spec:
   selector:
-    app: podinfo
+    app.kubernetes.io/name: podinfo
   ports:
   - port: 9898

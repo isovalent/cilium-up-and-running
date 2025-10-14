@@ -3,15 +3,16 @@ kind: Deployment
 metadata:
   name: httpd
 spec:
-  replicas: 3
   selector:
     matchLabels:
-      app: httpd
+      app.kubernetes.io/name: httpd
   template:
     metadata:
       labels:
-        app: httpd
+        app.kubernetes.io/name: httpd
     spec:
       containers:
       - name: httpd
         image: httpd
+        ports:
+        - containerPort: 80

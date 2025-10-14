@@ -8,4 +8,8 @@ nodes:
 - role: worker
   image: kindest/node:v1.33.0
 networking:
+  ipFamily: ipv6
+  apiServerAddress: 127.0.0.1
   disableDefaultCNI: true
+  podSubnet: "fd00:10:244::/48"
+  serviceSubnet: "fd00:10:96::/112"

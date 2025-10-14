@@ -1,0 +1,10 @@
+ipv6:
+  enabled: true
+ipv4:
+  enabled: false
+ipam:
+  mode: kubernetes
+
+routingMode: native
+autoDirectNodeRoutes: true
+ipv6NativeRoutingCIDR: fd00:10:244::/48
