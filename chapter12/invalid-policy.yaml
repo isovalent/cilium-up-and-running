@@ -1,0 +1,18 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: invalid-policy
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: example
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            externally-exposed: "true"
+      toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP

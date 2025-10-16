@@ -1,0 +1,32 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: client
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: client
+  egress:
+    - toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+          originatingTLS:
+            secret:
+              namespace: cilium-secrets
+              name: public-ca-bundle
+          terminatingTLS:
+            secret:
+              namespace: cilium-secrets
+              name: cilium-io-cert
+          rules:
+            http:
+              - host: cilium.io
+    - toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+      toEndpoints:
+        - matchLabels:
+            k8s-app: kube-dns
+            io.kubernetes.pod.namespace: kube-system

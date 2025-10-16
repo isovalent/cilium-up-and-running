@@ -1,0 +1,10 @@
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: host-lockdown
+spec:
+  nodeSelector: {}
+  ingress:
+    - {}
+  egress:
+    - {}

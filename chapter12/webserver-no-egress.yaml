@@ -1,0 +1,10 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: webserver-no-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: webserver
+  egress:
+    - {}

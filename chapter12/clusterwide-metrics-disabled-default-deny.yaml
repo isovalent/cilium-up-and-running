@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: clusterwide-metrics
+spec:
+  endpointSelector: {}
+  enableDefaultDeny:
+    ingress: false
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: metrics
+            app.kubernetes.io/name: metrics-collector
+      toPorts:
+        - ports:
+            - port: "9113"
+              protocol: TCP

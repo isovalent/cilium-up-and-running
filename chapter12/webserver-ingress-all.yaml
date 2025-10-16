@@ -1,0 +1,24 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: webserver
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: webserver
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: test
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: metrics
+            app.kubernetes.io/name: metrics-collector
+      toPorts:
+        - ports:
+            - port: "9113"
+              protocol: TCP

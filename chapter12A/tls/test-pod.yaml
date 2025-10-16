@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app.kubernetes.io/name: client
+  name: test
+spec:
+  containers:
+    - name: netshoot
+      image: nicolaka/netshoot
+      args:
+        - sleep
+        - infinity
+      volumeMounts:
+        - name: ca-certs
+          mountPath: /etc/ssl/certs/
+  volumes:
+    - name: ca-certs
+      configMap:
+        name: internal-ca-bundle
+        items:
+          - key: ca.crt
+            path: ca-certificates.crt

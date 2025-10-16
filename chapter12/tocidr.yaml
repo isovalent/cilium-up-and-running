@@ -1,0 +1,11 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: client
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: test
+  egress:
+    - toCIDR:
+        - "1.1.1.1/32"

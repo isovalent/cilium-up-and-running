@@ -1,0 +1,13 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: webserver
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: webserver
+  ingress:
+    - toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP

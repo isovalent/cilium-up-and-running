@@ -1,0 +1,25 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cilium-io-only
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: client
+  egress:
+    - toCIDR:
+        - "104.198.14.52/32"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "80"
+              protocol: TCP
+    - toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+      toEndpoints:
+        - matchLabels:
+            k8s-app: kube-dns
+            io.kubernetes.pod.namespace: kube-system
