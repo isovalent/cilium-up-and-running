@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: netshoot-client
-spec:
-  containers:
-  - name: netshoot
-    image: nicolaka/netshoot:latest
-    command: ["sleep", "infinite"]
