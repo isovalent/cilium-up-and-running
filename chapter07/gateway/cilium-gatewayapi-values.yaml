@@ -1,0 +1,9 @@
+kubeProxyReplacement: true
+l2announcements:
+  enabled: true
+devices:
+  - eth0
+ipam:
+  mode: kubernetes
+gatewayAPI:
+  enabled: true

@@ -1,0 +1,12 @@
+aksbyocni:
+  enabled: true
+azure:
+  resourceGroup: bandwidth-rg
+cluster:
+  name: bandwidth-rg
+nodeinit:
+  enabled: true
+operator:
+  replicas: 1
+bandwidthManager:
+  enabled: true

@@ -1,0 +1,7 @@
+kubeProxyReplacement: true
+egressGateway:
+  enabled: true
+devices:
+  - eth0
+bpf:
+  masquerade: true
