@@ -1,5 +1,0 @@
-kubeProxyReplacement: true
-bpf:
-  masquerade: true
-ipMasqAgent:
-  enabled: true
