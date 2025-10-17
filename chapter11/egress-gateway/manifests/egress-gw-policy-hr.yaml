@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumEgressGatewayPolicy
+metadata:
+  name: hr-egress
+spec:
+  destinationCIDRs:
+  - "172.18.0.0/16"
+  selectors:
+  - namespaceSelector:
+      matchLabels:
+        name: hr
+  egressGateway:
+    nodeSelector:
+      matchLabels:
+        egress-gw : "hr"
+    egressIP: 172.18.0.100

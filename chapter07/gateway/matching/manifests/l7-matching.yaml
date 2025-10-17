@@ -1,0 +1,75 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: l7-matching
+spec:
+  parentRefs:
+  - name: my-gateway
+  rules:
+  # Rule 1: Method-based routing - GET requests to details
+  - matches:
+    - method: GET
+      path:
+        type: PathPrefix
+        value: /api/details
+    backendRefs:
+    - name: details
+      port: 9080
+  
+  # Rule 2: Header-based routing - requests with special header
+  - matches:
+    - headers:
+      - type: Exact
+        name: x-user-type
+        value: premium
+      path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: productpage
+      port: 9080
+  
+  # Rule 3: Query parameter routing - requests with version param
+  - matches:
+    - queryParams:
+      - type: Exact
+        name: version
+        value: v2
+      path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: details
+      port: 9080
+  
+  # Rule 4: Multiple conditions - POST with specific header and path
+  - matches:
+    - method: POST
+      headers:
+      - type: Exact
+        name: content-type
+        value: application/json
+      path:
+        type: Exact
+        value: /api/submit
+    backendRefs:
+    - name: productpage
+      port: 9080
+  
+  # Rule 5: Regex path matching
+  - matches:
+    - path:
+        type: RegularExpression
+        value: "/api/users/[0-9]+"
+    backendRefs:
+    - name: details
+      port: 9080
+  
+  # Default rule - catch all other traffic
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: productpage
+      port: 9080
