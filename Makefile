@@ -6,7 +6,7 @@
 #   make down
 
 # -------- Variables (override on the command line if needed) --------
-CLUSTER           ?= cilium-book
+CLUSTER           ?= kind
 KIND_IMAGE        ?= kindest/node:v1.33.0
 CILIUM_VERSION    ?= 1.18.2
 USE_CASE          ?= # Optional use case within chapter
