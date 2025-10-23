@@ -9,4 +9,3 @@ nodes:
   image: kindest/node:v1.33.0
 networking:
   disableDefaultCNI: true
-  kubeProxyMode: "none"
