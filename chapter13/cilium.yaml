@@ -1,0 +1,9 @@
+kubeProxyReplacement: true
+k8sServicePort: 6443
+# k8sServiceHost set at install time via a --set flag
+autoDirectNodeRoutes: true
+routingMode: native
+ipv4NativeRoutingCIDR: 10.244.0.0/16
+encryption:
+  enabled: true
+  type: wireguard
