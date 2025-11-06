@@ -4,7 +4,6 @@ ipv4:
   enabled: false
 ipam:
   mode: kubernetes
-
 routingMode: native
 autoDirectNodeRoutes: true
-ipv6NativeRoutingCIDR: fd00:10:244::/48
+ipv6NativeRoutingCIDR: 2001:db8:10:244::/48
