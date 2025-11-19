@@ -1,12 +1,15 @@
 apiVersion: "cilium.io/v2alpha1"
 kind: CiliumL2AnnouncementPolicy
 metadata:
-  name: policy1
+  name: l2-policy
 spec:
-  loadBalancerIPs: true  
-  interfaces:
-  - eth0
+  serviceSelector:
+    matchLabels:
+      announcement: l2
   nodeSelector:
     matchExpressions:
       - key: node-role.kubernetes.io/control-plane
         operator: DoesNotExist
+  interfaces:
+  - ^eth0
+  loadBalancerIPs: true
