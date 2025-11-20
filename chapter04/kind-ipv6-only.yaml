@@ -1,12 +1,12 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
-- role: control-plane
-  image: kindest/node:v1.33.0
-- role: worker
-  image: kindest/node:v1.33.0
-- role: worker
-  image: kindest/node:v1.33.0
+  - role: control-plane
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
+  - role: worker
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
+  - role: worker
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
 networking:
   ipFamily: ipv6
   disableDefaultCNI: true

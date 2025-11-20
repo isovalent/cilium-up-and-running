@@ -3,33 +3,33 @@ apiVersion: kind.x-k8s.io/v1alpha4
 networking:
   disableDefaultCNI: true
 nodes:
-- role: control-plane
-  image: kindest/node:v1.33.0
-# Compute nodes
-- role: worker
-  image: kindest/node:v1.33.0
-- role: worker
-  image: kindest/node:v1.33.0
-# Egress nodes
-- role: worker
-  image: kindest/node:v1.33.0
-  labels:
-    egress-gw: true
-  kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "egress-gw=true"
-        register-with-taints: "egress-gw:NoSchedule"
-- role: worker
-  image: kindest/node:v1.33.0
-  labels:
-    egress-gw: true
-  kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "egress-gw=true"
-        register-with-taints: "egress-gw:NoSchedule"
+  - role: control-plane
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
+  # Compute nodes
+  - role: worker
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
+  - role: worker
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
+  # Egress nodes
+  - role: worker
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
+    labels:
+      egress-gw: true
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "egress-gw=true"
+            register-with-taints: "egress-gw:NoSchedule"
+  - role: worker
+    image: kindest/node:v1.33.4@sha256:25a6018e48dfcaee478f4a59af81157a437f15e6e140bf103f85a2e7cd0cbbf2
+    labels:
+      egress-gw: true
+    kubeadmConfigPatches:
+      - |-
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "egress-gw=true"
+            register-with-taints: "egress-gw:NoSchedule"
