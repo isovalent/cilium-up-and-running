@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: httpd
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app.kubernetes.io/name: httpd
