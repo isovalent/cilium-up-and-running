@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-cluster_name=ch13
+cluster_name=ch14
 context="kind-$cluster_name"
 
 kubectl patch \
