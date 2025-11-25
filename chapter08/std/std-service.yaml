@@ -12,6 +12,5 @@ spec:
     targetPort: 8080
   selector:
     app: echo
-  ipFamilyPolicy: SingleStack
   #trafficDistribution: PreferClose
 
