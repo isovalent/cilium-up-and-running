@@ -28,6 +28,13 @@ spec:
       labels:
         app: echo-server
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app: echo-server
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: echo-server
           image: kicbase/echo-server:1.0
