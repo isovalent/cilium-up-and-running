@@ -49,7 +49,7 @@ helm repo update
 # Install Cilium with Maglev configuration
 echo_info "🔧 Installing Cilium with Maglev configuration..."
 helm upgrade --install cilium cilium/cilium \
-  --version 1.18.2 \
+  --version 1.18.4 \
   -f cilium-maglev-values.yaml \
   -n kube-system
 
