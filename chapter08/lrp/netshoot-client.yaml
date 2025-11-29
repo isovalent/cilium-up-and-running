@@ -3,6 +3,8 @@ kind: Pod
 metadata:
   name: netshoot-client
 spec:
+  nodeSelector:
+    kubernetes.io/hostname: kind-worker
   containers:
   - name: netshoot
     image: nicolaka/netshoot:latest
