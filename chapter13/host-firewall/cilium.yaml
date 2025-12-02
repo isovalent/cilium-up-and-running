@@ -1,6 +1,0 @@
-operator:
-  replicas: 1
-kubeProxyReplacement: true
-k8sServicePort: 6443
-hostFirewall:
-  enabled: true
