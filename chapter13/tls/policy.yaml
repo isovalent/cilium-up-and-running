@@ -5,7 +5,7 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: client
+      app.kubernetes.io/name: test
   egress:
     - toPorts:
         - ports:
@@ -22,6 +22,7 @@ spec:
           rules:
             http:
               - host: cilium.io
+                path: /blog/.*
     - toPorts:
         - ports:
             - port: "53"
