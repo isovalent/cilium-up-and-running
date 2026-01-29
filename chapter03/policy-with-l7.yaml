@@ -6,16 +6,16 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
-      app: nginx
+      app.kubernetes.io/name: nginx
   ingress:
     - fromEndpoints:
         - matchLabels:
-            app: netshoot-client
+            app.kubernetes.io/name: netshoot-client
       toPorts:
         - ports:
             - port: "80"
               protocol: TCP
           rules:
             http:
-            - method: "GET"
-              path: "/index.html"
+              - method: "GET"
+                path: "/index.html"
