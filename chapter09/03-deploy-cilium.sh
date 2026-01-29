@@ -9,7 +9,7 @@ for i in "${!clusters[@]}"; do
     --kube-context "kind-$name" \
     cilium cilium/cilium \
     --namespace kube-system \
-    --version "1.18.1" \
+    --version "1.18.5" \
     --values cilium.yaml \
     --set "cluster.id=$id" \
     --set "cluster.name=$name" \
