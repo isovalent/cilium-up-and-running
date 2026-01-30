@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-bridge_name="$(podman network list \
+bridge_name="$(docker network list \
   --format json \
   | jq -r '.[] | select(.name == "kind") | .network_interface')"
 
-podman run \
+docker run \
   --network host \
   --privileged \
   -it \
