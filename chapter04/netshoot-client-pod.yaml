@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: netshoot-client
   labels:
-    app: netshoot-client
+    app.kubernetes.io/name: netshoot-client
 spec:
   nodeSelector:
     kubernetes.io/hostname: kind-worker
@@ -11,3 +11,4 @@ spec:
     - name: netshoot
       image: nicolaka/netshoot
       command: ["sleep", "infinity"]
+

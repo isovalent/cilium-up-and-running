@@ -14,4 +14,4 @@ spec:
       protocol: TCP
   type: ClusterIP
   selector:
-    app: echoserver
+    app.kubernetes.io/name: echoserver

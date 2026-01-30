@@ -4,7 +4,7 @@ kind: Pod
 metadata:
   name: pod-worker2
   labels:
-    app: pod-worker2
+    app.kubernetes.io/name: pod-worker2
 spec:
   nodeName: kind-worker2
   containers:

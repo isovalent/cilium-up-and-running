@@ -6,11 +6,11 @@ spec:
   replicas: 5
   selector:
     matchLabels:
-      app: echoserver
+      app.kubernetes.io/name: echoserver
   template:
     metadata:
       labels:
-        app: echoserver
+        app.kubernetes.io/name: echoserver
     spec:
       containers:
       - image: ealen/echo-server:latest
