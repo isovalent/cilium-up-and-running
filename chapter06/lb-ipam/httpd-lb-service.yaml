@@ -5,6 +5,6 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: httpd
+    app.kubernetes.io/name: httpd
   ports:
   - port: 80
