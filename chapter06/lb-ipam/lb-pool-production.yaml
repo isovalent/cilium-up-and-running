@@ -1,11 +1,11 @@
 apiVersion: "cilium.io/v2"
 kind: CiliumLoadBalancerIPPool
 metadata:
-  name: "important-pool"
+  name: "production-pool"
 spec:
   allowFirstLastIPs: "No"
   blocks:
   - cidr: "100.16.38.0/24"
   serviceSelector:
     matchLabels:
-      foo: bar
+      environment: production
