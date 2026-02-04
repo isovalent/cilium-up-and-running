@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 set -euo pipefail
 
 # Colors for output
@@ -200,7 +199,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: echo-1
+    app.kubernetes.io/name: echo-1
   name: echo-1
 spec:
   type: LoadBalancer
@@ -210,23 +209,23 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: echo-1
+    app.kubernetes.io/name: echo-1
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: echo-1
+    app.kubernetes.io/name: echo-1
   name: echo-1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: echo-1
+      app.kubernetes.io/name: echo-1
   template:
     metadata:
       labels:
-        app: echo-1
+        app.kubernetes.io/name: echo-1
     spec:
       containers:
       - image: gcr.io/kubernetes-e2e-test-images/echoserver:2.2

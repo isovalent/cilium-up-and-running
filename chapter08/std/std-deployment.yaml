@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: echo
   labels:
-    app: echo
+    app.kubernetes.io/name: echo
 spec:
   replicas: 8
   selector:
     matchLabels:
-      app: echo
+      app.kubernetes.io/name: echo
   template:
     metadata:
       labels:
-        app: echo
+        app.kubernetes.io/name: echo
     spec:
       topologySpreadConstraints:
         - maxSkew: 1

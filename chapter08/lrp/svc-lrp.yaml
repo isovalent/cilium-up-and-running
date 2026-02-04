@@ -10,7 +10,8 @@ spec:
   redirectBackend:
     localEndpointSelector:
       matchLabels:
-        app: echo-server
+        app.kubernetes.io/name: echo-server
     toPorts:
       - port: "8080"
         protocol: TCP
+

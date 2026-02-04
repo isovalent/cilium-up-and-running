@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: echo
   labels:
-    app: echo
+    app.kubernetes.io/name: echo
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: echo
+      app.kubernetes.io/name: echo
   template:
     metadata:
       labels:
-        app: echo
+        app.kubernetes.io/name: echo
     spec:
       nodeSelector:
         maglev-backend: "true"
@@ -21,3 +21,4 @@ spec:
           image: kicbase/echo-server:1.0
           ports:
             - containerPort: 8080
+

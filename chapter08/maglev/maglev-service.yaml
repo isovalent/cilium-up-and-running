@@ -4,9 +4,10 @@ metadata:
   name: echo-lb
 spec:
   selector:
-    app: echo
+    app.kubernetes.io/name: echo
   ports:
     - name: http
       port: 8080
       targetPort: 8080
   type: LoadBalancer
+

@@ -1,4 +1,4 @@
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPClusterConfig
 metadata:
   name: frr
@@ -15,3 +15,4 @@ spec:
       peerAddress: 172.18.0.7
       peerConfigRef:
         name: "frr"
+

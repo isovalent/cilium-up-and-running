@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: echo-server
   labels:
-    app: echo-server
+    app.kubernetes.io/name: echo-server
 spec:
   selector:
-    app: echo-server
+    app.kubernetes.io/name: echo-server
   ports:
     - name: http
       port: 8080
@@ -17,23 +17,23 @@ kind: Deployment
 metadata:
   name: echo-server
   labels:
-    app: echo-server
+    app.kubernetes.io/name: echo-server
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: echo-server
+      app.kubernetes.io/name: echo-server
   template:
     metadata:
       labels:
-        app: echo-server
+        app.kubernetes.io/name: echo-server
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app: echo-server
+                  app.kubernetes.io/name: echo-server
               topologyKey: kubernetes.io/hostname
       containers:
         - name: echo-server
@@ -57,3 +57,4 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+

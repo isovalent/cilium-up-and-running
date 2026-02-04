@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -82,8 +82,8 @@ kubectl label node kind-worker2 maglev-backend=true --overwrite || true
 echo_info "🔄 Setting up FRR container for BGP peering..."
 
 # Get worker node IPs for BGP configuration
-WORKER3_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kind-worker3)
-WORKER4_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kind-worker4)
+WORKER3_IP="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kind-worker3)"
+WORKER4_IP="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kind-worker4)"
 
 # Create FRR configuration directory
 mkdir -p frr
@@ -109,7 +109,7 @@ docker run -d --name frr \
     frrouting/frr:v8.2.2 sleep 3600
 
 # Get the actual FRR container IP
-FRR_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' frr)
+FRR_IP="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' frr)"
 echo_info "📍 FRR container got IP: ${FRR_IP}"
 
 # Now recreate FRR configuration with the correct IP
@@ -190,3 +190,4 @@ echo "   1. Check Cilium status: kubectl -n kube-system exec -it ds/cilium -- ci
 echo "   2. Verify Maglev algorithm: Look for 'Backend Selection: Maglev' in the output"
 echo "   3. Get service IP: kubectl get svc echo-lb"
 echo "   4. Test from external client with fixed source port for consistent hashing"
+

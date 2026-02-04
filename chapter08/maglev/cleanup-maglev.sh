@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Cleanup script for Cilium Maglev demonstration
 # Removes kind cluster and cleans up resources
@@ -79,3 +79,4 @@ echo "   ✅ Docker networks cleaned up"
 echo "   ✅ FRR configuration directory removed"
 echo ""
 echo_info "💡 You can now run './setup-maglev.sh' again to recreate the demo environment"
+

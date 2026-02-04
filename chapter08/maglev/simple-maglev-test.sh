@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Simple Maglev consistency test from FRR container
 # Tests that the same source port consistently hits the same backend
@@ -65,3 +65,4 @@ echo "   3. Different source ports may hit different backends (load balancing)"
 echo ""
 echo_info "⏳ Waiting a moment for port cleanup..."
 sleep 3
+

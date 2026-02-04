@@ -5,9 +5,10 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: whatsmyip
+    app.kubernetes.io/name: whatsmyip
   ports:
     - port: 80
       targetPort: 8000
       protocol: TCP
       nodePort: 30080
+

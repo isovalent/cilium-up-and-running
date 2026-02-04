@@ -1,4 +1,4 @@
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPAdvertisement
 metadata:
   name: frr
@@ -13,3 +13,4 @@ spec:
       selector:
         matchExpressions:
           - {key: somekey, operator: NotIn, values: ['never-used-value']}
+

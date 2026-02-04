@@ -10,3 +10,4 @@ nodes:
 networking:
   disableDefaultCNI: true
   kubeProxyMode: none
+

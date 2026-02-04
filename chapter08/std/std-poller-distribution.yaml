@@ -6,12 +6,12 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: curl
+      app.kubernetes.io/name: curl
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: curl
+        app.kubernetes.io/name: curl
     spec:
       topologySpreadConstraints:
         - maxSkew: 1
