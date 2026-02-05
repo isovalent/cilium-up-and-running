@@ -154,7 +154,7 @@ echo_info "✅ FRR container started with BGP configuration (IP: ${FRR_IP})"
 # Create and apply BGP cluster configuration with correct FRR IP
 echo_info "🔄 Configuring Cilium BGP cluster with FRR IP: ${FRR_IP}"
 cat > bgp-cluster-dynamic.yaml << EOF
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPClusterConfig
 metadata:
   name: frr

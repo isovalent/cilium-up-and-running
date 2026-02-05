@@ -67,7 +67,7 @@ cilium status --wait
 # LoadBalancer IP Pool
 # -----------------------------
 cat << 'EOF' > ../manifests/lb-ippool.yaml
-apiVersion: "cilium.io/v2alpha1"
+apiVersion: "cilium.io/v2"
 kind: CiliumLoadBalancerIPPool
 metadata:
   name: "dsr-demo-pool"
@@ -82,7 +82,7 @@ kubectl apply -f ../manifests/lb-ippool.yaml || echo_error "Failed to apply LB I
 # BGP Configs
 # -----------------------------
 cat << 'EOF' > ../manifests/bgp-peer.yaml
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPPeerConfig
 metadata:
   name: frr
@@ -98,7 +98,7 @@ EOF
 kubectl apply -f ../manifests/bgp-peer.yaml || echo_error "Failed to apply BGP peer config"
 
 cat << 'EOF' > ../manifests/bgp-cluster.yaml
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPClusterConfig
 metadata:
   name: frr
@@ -120,7 +120,7 @@ EOF
 kubectl apply -f ../manifests/bgp-cluster.yaml || echo_error "Failed to apply BGP cluster config"
 
 cat << 'EOF' > ../manifests/bgp-advertisement.yaml
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumBGPAdvertisement
 metadata:
   name: frr
