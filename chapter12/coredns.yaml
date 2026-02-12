@@ -14,7 +14,7 @@ spec:
             protocol: ANY
       fromEntities:
         - cluster
-  egress
+  egress:
     - toPorts:
         - ports:
           - port: "6443"
