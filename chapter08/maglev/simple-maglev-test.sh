@@ -39,7 +39,7 @@ echo "Format: SourcePort -> Backend"
 echo ""
 
 # Test with fixed source ports
-for i in $(seq 1 $NUM_TESTS); do
+for i in $(seq 1 "$NUM_TESTS"); do
     src_port=$((60000 + i))
     
     # Get response and extract backend
