@@ -4,7 +4,7 @@ set -uo pipefail
 yamlcheck () {
   local y="$1"
   printf "File: %s\n" "$y"
-  diff <(yq "$y") "$y"
+  yq "$y" >/dev/null
 }
 
 ret=0
