@@ -14,6 +14,6 @@ spec:
     peers:
     - name: peer-64512-frr
       peerASN: 64512
-      peerAddress: 172.18.0.7
+      peerAddress: 172.18.0.6
       peerConfigRef:
         name: peer-config
