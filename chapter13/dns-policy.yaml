@@ -5,7 +5,7 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: client
+      app.kubernetes.io/name: test
   egress:
     - toPorts:
         - ports:
