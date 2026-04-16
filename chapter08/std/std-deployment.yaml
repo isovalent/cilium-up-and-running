@@ -20,7 +20,7 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app: echo
+              app.kubernetes.io/name: echo
       containers:
         - image: kicbase/echo-server:1.0
           name: echo
