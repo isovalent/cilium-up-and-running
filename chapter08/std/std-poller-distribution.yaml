@@ -19,7 +19,7 @@ spec:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              app: curl
+              app.kubernetes.io/name: curl
       containers:
         - name: curl
           image: docker.io/curlimages/curl:latest
