@@ -10,3 +10,5 @@ nodes:
 networking:
   disableDefaultCNI: true
   ipFamily: dual
+  # enable for MacOS
+  apiServerAddress: "127.0.0.1"

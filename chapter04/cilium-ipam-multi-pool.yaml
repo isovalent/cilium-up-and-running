@@ -13,4 +13,5 @@ endpointRoutes:
 
 autoDirectNodeRoutes: true
 ipv4NativeRoutingCIDR: 10.0.0.0/8
+egressMasqueradeInterfaces: eth0 # Needed in KIND clusters to avoid masquerading traffic to the host network. In cloud environments, this is not needed and can be removed.
 

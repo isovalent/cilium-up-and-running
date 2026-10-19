@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euxo pipefail
 
-bridge_name="$(docker network list \
-  --format json \
-  | jq -r '.[] | select(.name == "kind") | .network_interface')"
+bridge_name="$(docker network inspect kind \
+  | jq -r '.[0] |
+    .Options["com.docker.network.bridge.name"] //
+    ("br-" + .Id[:12])')"
 
 docker run \
   --network host \

@@ -13,3 +13,5 @@ ipam:
         ipv4:
           cidrs: ["10.10.0.0/16"]
           maskSize: 27
+
+egressMasqueradeInterfaces: eth0 # Needed in KIND clusters to avoid masquerading traffic to the host network. In cloud environments, this is not needed and can be removed.
